@@ -1,0 +1,118 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="google\api\annotations.proto" />
+	  <None Remove="google\api\http.proto" />
+	  <None Remove="google\rpc\code.proto" />
+	  <None Remove="google\rpc\error_details.proto" />
+	  <None Remove="google\rpc\status.proto" />
+	  <None Remove="google\type\dayofweek.proto" />
+	  <None Remove="google\type\timeofday.proto" />
+	  <None Remove="yandex\cloud\access\access.proto" />
+	  <None Remove="yandex\cloud\api\operation.proto" />
+	  <None Remove="yandex\cloud\compute\v1\disk.proto" />
+	  <None Remove="yandex\cloud\compute\v1\disk_placement_group.proto" />
+	  <None Remove="yandex\cloud\compute\v1\disk_placement_group_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\disk_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\disk_type.proto" />
+	  <None Remove="yandex\cloud\compute\v1\disk_type_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\filesystem.proto" />
+	  <None Remove="yandex\cloud\compute\v1\filesystem_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\host_group.proto" />
+	  <None Remove="yandex\cloud\compute\v1\host_group_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\host_type.proto" />
+	  <None Remove="yandex\cloud\compute\v1\host_type_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\image.proto" />
+	  <None Remove="yandex\cloud\compute\v1\image_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\instance.proto" />
+	  <None Remove="yandex\cloud\compute\v1\instance_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\placement_group.proto" />
+	  <None Remove="yandex\cloud\compute\v1\placement_group_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\snapshot.proto" />
+	  <None Remove="yandex\cloud\compute\v1\snapshot_service.proto" />
+	  <None Remove="yandex\cloud\compute\v1\zone.proto" />
+	  <None Remove="yandex\cloud\compute\v1\zone_service.proto" />
+	  <None Remove="yandex\cloud\oauth\claims.proto" />
+	  <None Remove="yandex\cloud\operation\operation.proto" />
+	  <None Remove="yandex\cloud\operation\operation_service.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\organization.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\organization_service.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\saml\certificate.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\saml\certificate_service.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\saml\federation.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\saml\federation_service.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\user_account.proto" />
+	  <None Remove="yandex\cloud\organizationmanager\v1\user_service.proto" />
+	  <None Remove="yandex\cloud\resourcemanager\v1\cloud.proto" />
+	  <None Remove="yandex\cloud\resourcemanager\v1\cloud_service.proto" />
+	  <None Remove="yandex\cloud\resourcemanager\v1\folder.proto" />
+	  <None Remove="yandex\cloud\resourcemanager\v1\folder_service.proto" />
+	  <None Remove="yandex\cloud\validation.proto" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.21.1" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.46.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.46.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Protobuf Include="google\api\annotations.proto" GrpcServices="Client" />
+	  <Protobuf Include="google\api\http.proto" GrpcServices="Client" />
+	  <Protobuf Include="google\rpc\code.proto" GrpcServices="Client" />
+	  <Protobuf Include="google\rpc\error_details.proto" GrpcServices="Client" />
+	  <Protobuf Include="google\rpc\status.proto" GrpcServices="Client" />
+	  <Protobuf Include="google\type\dayofweek.proto" GrpcServices="Client" />
+	  <Protobuf Include="google\type\timeofday.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\access\access.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\api\operation.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\disk.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\disk_placement_group.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\disk_placement_group_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\disk_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\disk_type.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\disk_type_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\filesystem.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\filesystem_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\host_group.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\host_group_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\host_type.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\host_type_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\image.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\image_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\instance.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\instance_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\placement_group.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\placement_group_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\snapshot.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\snapshot_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\zone.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\compute\v1\zone_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\oauth\claims.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\operation\operation.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\operation\operation_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\organization.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\organization_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\saml\certificate.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\saml\certificate_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\saml\federation.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\saml\federation_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\user_account.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\organizationmanager\v1\user_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\resourcemanager\v1\cloud.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\resourcemanager\v1\cloud_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\resourcemanager\v1\folder.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\resourcemanager\v1\folder_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\validation.proto" GrpcServices="Client" />
+	</ItemGroup>
+
+</Project>

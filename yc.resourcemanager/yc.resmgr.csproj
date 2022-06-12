@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.Net.Client" Version="2.46.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\yc.basecmdlet\yc.basecmdlet.csproj" />
+    <ProjectReference Include="..\yc.config\yc.config.csproj" />
+    <ProjectReference Include="..\yc.proto\yc.proto.csproj" />
+    <ProjectReference Include="..\ycps\yc.auth\yc.auth.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,1 @@
+dotnet build && dotnet publish --self-contained --use-current-runtime -c Debug -o C:\temp\ycps\
