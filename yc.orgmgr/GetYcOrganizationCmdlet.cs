@@ -17,7 +17,7 @@ namespace yc.orgmgr
         protected override void ProcessRecord()
         {
             var req = new ListOrganizationsRequest {  };
-            req.PageSize = int.Parse(YcConfig.Configuration["Settings:defaultPageSize"]);
+            req.PageSize = int.Parse(YcConfig.Instance.Configuration["Settings:defaultPageSize"]);
             var ret = base.grpcClient.List(req, headers);
             WriteObject(ret.Organizations, true);
         }

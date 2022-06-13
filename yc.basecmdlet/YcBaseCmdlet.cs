@@ -28,9 +28,9 @@ namespace yc.basecmdlet
         {
             _headers = new Metadata();
             _headers.Add("Authorization", $"Bearer {AuthCache.Instance.GetAuthHeader()}");
-            var endpointId = YcConfig.Configuration[$"TypeToEndpointsMappings:{typeof(TClient).Name}"];
+            var endpointId = YcConfig.Instance.Configuration[$"TypeToEndpointsMappings:{typeof(TClient).Name}"];
             
-            _endpoint = YcConfig.GetEndpointById(endpointId).Result;
+            _endpoint = YcConfig.Instance.Configuration[$"Settings:{ endpointId }"];
             _grpcChannel = GrpcChannel.ForAddress($"https://{_endpoint}");
             _grpcClient = (TClient)Activator.CreateInstance(typeof(TClient), new object[] { _grpcChannel });
         }

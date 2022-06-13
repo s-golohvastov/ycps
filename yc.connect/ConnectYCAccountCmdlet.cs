@@ -26,7 +26,7 @@ namespace yc.connect
             var ycRequestBody = new YandexOauthRequest{ yandexPassportOauthToken = OAuthToken };
             string ycRequestBodyString = JsonSerializer.Serialize(ycRequestBody);
             var body = new StringContent( JsonSerializer.Serialize(ycRequestBody), Encoding.UTF8, "application/json");
-            var responce = client.PostAsync(YcConfig.Configuration["Settings:YandexTokensEndpoint"], body).Result;
+            var responce = client.PostAsync(YcConfig.Instance.Configuration["Settings:YandexTokensEndpoint"], body).Result;
             var res = JsonSerializer.Deserialize<IAMTokenRecord>(responce.Content.ReadAsStringAsync().Result);
 
             AuthCache.Instance.AddEntry("AuthHeader", res.iamToken, res.expiresAt);

@@ -40,7 +40,7 @@ namespace yc.tests
                 _powershell.AddCommand("Connect-YcAccount");
                 _powershell.AddParameters(new Dictionary<String, Object>
                     {
-                        {"OAuthToken", YcConfig.Configuration["Secrets:OAuthToken"]}
+                        {"OAuthToken", YcConfig.Instance.Configuration["Secrets:OAuthToken"]}
                     });
                 Collection<PSObject> result = _powershell.Invoke();
 

@@ -41,7 +41,7 @@ namespace yc.compute
             if (string.IsNullOrEmpty(InstanceId))
             {
                 // list
-                var res = base.grpcClient.List(new ListInstancesRequest { PageSize = int.Parse(YcConfig.Configuration["Settings:defaultPageSize"]) }, base.headers);
+                var res = base.grpcClient.List(new ListInstancesRequest { PageSize = int.Parse(YcConfig.Instance.Configuration["Settings:defaultPageSize"]) }, base.headers);
                 WriteObject(res.Instances, true);
             }
             else

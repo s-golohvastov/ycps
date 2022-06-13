@@ -6,6 +6,7 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 using yc.config;
+using yc.connect;
 using yc.resourcemanager;
 
 namespace yc.tests
@@ -20,6 +21,12 @@ namespace yc.tests
         {
             _powershell = PowerShell.Create();
             _powershell.AddCommand("Import-Module")
+                .AddParameter("Assembly", System.Reflection.Assembly.GetAssembly(typeof(ConnectYCAccountCmdlet)));
+            _powershell.Invoke();
+            _powershell.Commands.Clear();
+
+
+            _powershell.AddCommand("Import-Module")
                 .AddParameter("Assembly", System.Reflection.Assembly.GetAssembly(typeof(GetYcCloudCmdlet)));
             _powershell.Invoke();
             _powershell.Commands.Clear();
@@ -33,16 +40,24 @@ namespace yc.tests
 
 
         [TestMethod]
-        public async Task GetYcCloudByCloudIdString()
+        public void GetYcCloudByCloudIdString()
         {
             try
             {
+                _powershell.AddCommand("Connect-YcAccount");
+                _powershell.AddParameters(new Dictionary<String, Object>
+                    {
+                        {"OAuthToken", YcConfig.Instance.Configuration["Secrets:OAuthToken"]}
+                    });
+                Collection<PSObject> result = _powershell.Invoke();
+                _powershell.Commands.Clear();
+
                 _powershell.AddCommand("Get-YcCloud");
                 _powershell.AddParameters(new Dictionary<String, Object>
                     {
-                        {"CloudId", YcConfig.Configuration["Secrets:CloudId"]}
+                        {"CloudId", YcConfig.Instance.Configuration["Secrets:CloudId"]}
                     });
-                Collection<PSObject> result = _powershell.Invoke();
+                result = _powershell.Invoke();
 
             }
             finally
@@ -51,14 +66,14 @@ namespace yc.tests
             }
         }
 
-        public async Task GetYcCloudByOrganizationObject()
+        public void GetYcCloudByOrganizationObject()
         {
             try
             {
                 _powershell.AddCommand("Connect-YcAccount");
                 _powershell.AddParameters(new Dictionary<String, Object>
                     {
-                        {"OAuthToken", YcConfig.Configuration["Secrets:OAuthToken"]}
+                        {"OAuthToken", YcConfig.Instance.Configuration["Secrets:OAuthToken"]}
                     });
                 Collection<PSObject> result = _powershell.Invoke();
 

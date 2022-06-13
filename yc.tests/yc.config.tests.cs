@@ -11,9 +11,9 @@ namespace yc.tests
     public class ycConfigTests
     {
         [TestMethod]
-        public async Task GetEndpointByIdTest()
+        public void GetEndpointByIdTest()
         {
-           var ret =  await YcConfig.GetEndpointById("compute");
+           var ret =  YcConfig.Instance.Configuration["Settings:compute"];
         }
     }
 }
