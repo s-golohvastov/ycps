@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\yc.basecmdlet\yc.basecmdlet.csproj" />
+  </ItemGroup>
+
 </Project>
