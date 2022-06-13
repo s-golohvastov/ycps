@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.Net.Client" Version="2.46.0" />
     <PackageReference Include="System.Management.Automation" Version="7.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\yc.config\yc.config.csproj" />
+    <ProjectReference Include="..\yc.proto\yc.proto.csproj" />
+    <ProjectReference Include="..\ycps\yc.auth\yc.auth.csproj" />
   </ItemGroup>
 
 </Project>

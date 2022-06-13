@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using yc.auth;
 using yc.config;
+using yc.connect;
 using yc.orgmgr;
 
 namespace yc.tests

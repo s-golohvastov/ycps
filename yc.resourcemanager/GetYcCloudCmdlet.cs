@@ -6,11 +6,12 @@ using Yandex.Cloud.Resourcemanager.V1;
 using yc.auth;
 using yc.basecmdlet;
 using yc.config;
+using static Yandex.Cloud.Resourcemanager.V1.CloudService;
 
 namespace yc.resourcemanager
 {
     [Cmdlet(VerbsCommon.Get, "YcCloud")]
-    public class GetYcCloudCmdlet : YcBaseCmdlet
+    public class GetYcCloudCmdlet : YcBase<CloudServiceClient>
     {
         [Parameter(ParameterSetName = "SingleCloud")]
         public string CloudId;
@@ -20,21 +21,6 @@ namespace yc.resourcemanager
 
         [Parameter(ParameterSetName = "ListByOrgObj")]
         public Organization Organization;
-
-
-
-        private static string endpoint = YcConfig.GetEndpointById("resource-manager").Result;
-        private static GrpcChannel grpcChannel = GrpcChannel.ForAddress($"https://{endpoint}");
-        private static CloudService.CloudServiceClient grpcClient = new CloudService.CloudServiceClient(grpcChannel);
-
-
-        private Metadata headers; 
-
-        public GetYcCloudCmdlet()
-        {
-            headers = new Metadata();
-            headers.Add("Authorization", $"Bearer {AuthCache.Instance.GetAuthHeader()}");
-        }
 
         protected override void ProcessRecord()
         {
