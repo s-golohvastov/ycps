@@ -10,54 +10,38 @@ using static Yandex.Cloud.Resourcemanager.V1.CloudService;
 
 namespace yc.resourcemanager
 {
-    [Cmdlet(VerbsCommon.Get, "YcCloud")]
+    [Cmdlet(VerbsCommon.Get, "YcCloud", DefaultParameterSetName = "SingleCloud")]
     public class GetYcCloudCmdlet : YcBase<CloudServiceClient>
     {
         [Parameter(ParameterSetName = "SingleCloud")]
-        public string CloudId;
-
-        [Parameter(ParameterSetName = "ListByOrgString")]
-        public string OrganizationId;
-
-        [Parameter(ParameterSetName = "ListByOrgObj")]
-        public Organization Organization;
+        public string? CloudId;
 
         protected override void ProcessRecord()
         {
             switch (this.ParameterSetName)
             {
-                case "ListByOrgObj":
-                    ListByOrgObj(grpcClient, headers);
-                    break;
-                case "ListByOrgString":
-                    ListByOrgString(grpcClient, headers);  //TODO: cccc
-                    break;
                 case "SingleCloud":
-                    SingleCloud(grpcClient, headers);
+                    SingleCloud(grpcClient);
                     break;
 
             }
         }
 
-        private void ListByOrgObj(CloudService.CloudServiceClient c, Metadata h)
+        private void SingleCloud(CloudService.CloudServiceClient c)
         {
-            var request = new ListCloudsRequest { };
-            var cloud = c.List(request, h);
-            WriteObject(cloud, true);
-        }
+            if (string.IsNullOrEmpty(CloudId))
+            {
+                var request = new ListCloudsRequest();
+                var cloudList = c.List(request, base.headers);
+                WriteObject(cloudList.Clouds, true);
+            }
+            else
+            {
+                var request = new GetCloudRequest { CloudId = CloudId };
+                var cloud = c.Get(request, base.headers);
+                WriteObject(cloud);
 
-        private void ListByOrgString(CloudService.CloudServiceClient c, Metadata h)
-        {
-            var request = new ListCloudsRequest { OrganizationId = OrganizationId };
-            var cloud = c.List(request, h);
-            WriteObject(cloud, true);
-        }
-
-        private void SingleCloud(CloudService.CloudServiceClient c, Metadata h)
-        {
-            var request = new GetCloudRequest { CloudId = CloudId };
-            var cloud = c.Get(request, h);
-            WriteObject(cloud, true);
+            }
         }
     }
 }
