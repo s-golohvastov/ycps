@@ -6,38 +6,53 @@ namespace yc.config
 {
     public class YcConfig
     {
-        private static IConfigurationRoot _configuration = new ConfigurationBuilder()
-                                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+        private static Lazy<YcConfig> _instance = new Lazy<YcConfig>(() => new YcConfig());
+        public static YcConfig Instance { get { return _instance.Value; } }
+
+        private IConfigurationRoot _configuration;
+        public IConfigurationRoot Configuration { get => _configuration; }
+        private YcConfig()
+        {
+
+            var currentAssemblyparentFolder = Directory.GetParent(System.Reflection.Assembly.GetAssembly(typeof(YcConfig)).Location).FullName;
+            _configuration = new ConfigurationBuilder()
+                                    .SetBasePath(currentAssemblyparentFolder)
                                     .AddJsonFile("appsettings.json")
                                     .AddUserSecrets<YcConfig>()
                                     .Build();
 
-        public static IConfigurationRoot Configuration { get => _configuration; set => _configuration = value; }
-
-        public static async Task<string> GetEndpointById(string id)
-        {
-            if (string.IsNullOrEmpty(id)) throw new Exception("id must not be null");
-
-            var client = new HttpClient();
-            var response = await client.GetAsync( _configuration["Settings:YandexAPIEndpoints"] );
-
-            string result = string.Empty;
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            EndpointList list = RequestEndpointList(); //try refresh the list
+            if (list.endpoints.Length > 0)
             {
-                var r = await response.Content.ReadAsStringAsync();
-                if (null != r)
+                foreach (var item in list.endpoints)
                 {
-                    EndpointList? res = JsonSerializer.Deserialize<EndpointList>(r);
-                    if (null != res)
-                    {
-                        result = res.endpoints.Where(x => x.id == id).FirstOrDefault().address;
-                    }
-
+                    _configuration[$"Settings:{item.id}"] = item.address;
                 }
-
             }
+            else
+            {
+                foreach (EndpointRecord item in _configuration.GetSection("endpoints").GetChildren())
+                {
+                    _configuration[$"Settings:{item.id}"] = item.address;
+                }
+            }
+        }
 
-            return result;
+        private EndpointList RequestEndpointList()
+        {
+            var client = new HttpClient();
+            string result = string.Empty;
+
+            try
+            {
+                var response = client.GetAsync(_configuration["Settings:YandexAPIEndpoints"]).Result;
+                var r = response.Content.ReadAsStringAsync().Result;
+                return JsonSerializer.Deserialize<EndpointList>(r);
+            }
+            catch
+            {
+                return new EndpointList();
+            }
         }
     }
 }
