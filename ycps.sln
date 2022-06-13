@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build.ps1 = build.ps1
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yc.connect", "yc.connect\yc.connect.csproj", "{DA116875-07DC-43FD-99AA-287A070174D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{0733D734-1A60-4F9B-B5EC-5B15D2D80500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0733D734-1A60-4F9B-B5EC-5B15D2D80500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0733D734-1A60-4F9B-B5EC-5B15D2D80500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA116875-07DC-43FD-99AA-287A070174D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA116875-07DC-43FD-99AA-287A070174D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA116875-07DC-43FD-99AA-287A070174D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA116875-07DC-43FD-99AA-287A070174D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

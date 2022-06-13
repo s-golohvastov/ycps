@@ -5,10 +5,11 @@ using System.Management.Automation;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using yc.auth;
 using yc.basecmdlet;
 using yc.models;
 
-namespace yc.auth
+namespace yc.connect
 {
     [Cmdlet(VerbsCommunications.Connect, "YcAccount")]
     public class ConnectYCAccountCmdlet : YcBaseCmdlet
