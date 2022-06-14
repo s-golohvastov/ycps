@@ -49,11 +49,40 @@
 	  <None Remove="yandex\cloud\organizationmanager\v1\saml\federation_service.proto" />
 	  <None Remove="yandex\cloud\organizationmanager\v1\user_account.proto" />
 	  <None Remove="yandex\cloud\organizationmanager\v1\user_service.proto" />
+	  <None Remove="yandex\cloud\reference\reference.proto" />
 	  <None Remove="yandex\cloud\resourcemanager\v1\cloud.proto" />
 	  <None Remove="yandex\cloud\resourcemanager\v1\cloud_service.proto" />
 	  <None Remove="yandex\cloud\resourcemanager\v1\folder.proto" />
 	  <None Remove="yandex\cloud\resourcemanager\v1\folder_service.proto" />
 	  <None Remove="yandex\cloud\validation.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\address.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\address_service.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\gateway.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\gateway_service.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\network.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\network_service.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\route_table.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\route_table_service.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\security_group.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\security_group_service.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\subnet.proto" />
+	  <None Remove="yandex\cloud\vpc\v1\subnet_service.proto" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Protobuf Include="yandex\cloud\reference\reference.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\address.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\address_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\gateway.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\gateway_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\network.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\network_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\route_table.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\route_table_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\security_group.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\security_group_service.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\subnet.proto" GrpcServices="Client" />
+	  <Protobuf Include="yandex\cloud\vpc\v1\subnet_service.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 	<ItemGroup>
