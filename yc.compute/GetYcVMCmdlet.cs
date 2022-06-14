@@ -6,7 +6,7 @@ using static Yandex.Cloud.Compute.V1.InstanceService;
 
 namespace yc.compute
 {
-    [Cmdlet(VerbsCommon.Get, "YcCmdlet", DefaultParameterSetName = "ByInstanceId")]
+    [Cmdlet(VerbsCommon.Get, "YcVM", DefaultParameterSetName = "ByInstanceId")]
     public class GetYcVMCmdlet : YcBase<InstanceServiceClient>
     {
         [Parameter(ParameterSetName = "ByInstanceId")]
