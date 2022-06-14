@@ -1,18 +1,30 @@
 ﻿using System.Management.Automation;
 using Yandex.Cloud.Compute.V1;
+using Yandex.Cloud.Resourcemanager.V1;
 using yc.basecmdlet;
 using yc.config;
 using static Yandex.Cloud.Compute.V1.InstanceService;
 
 namespace yc.compute
 {
-    [Cmdlet(VerbsCommon.Get, "YcVM", DefaultParameterSetName = "ByInstanceId")]
+    [Cmdlet(VerbsCommon.Get, "YcVM", DefaultParameterSetName = "AllInFolderId")]
     public class GetYcVMCmdlet : YcBase<InstanceServiceClient>
     {
+        [Parameter(ParameterSetName = "AllInFolderId", Mandatory = true)]
+        [Parameter(ParameterSetName = "FilterByInstanceName", Mandatory = true)]
+        [ValidateNotNullOrEmpty]
+        public string? FolderId;
+
+        [Parameter(ParameterSetName = "AllInFolderObj", Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(ParameterSetName = "FilterFolderObjByInstanceName", Mandatory = true, ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
+        public Folder? Folder;
+
         [Parameter(ParameterSetName = "ByInstanceId")]
         public string? InstanceId;
 
-        [Parameter(ParameterSetName = "ByInstanceName")]
+        [Parameter(ParameterSetName = "FilterByInstanceName", Mandatory = true)]
+        [Parameter(ParameterSetName = "FilterFolderObjByInstanceName", Mandatory = true)]
         public string? InstanceName;
 
         protected override void ProcessRecord()
@@ -22,34 +34,50 @@ namespace yc.compute
                 case "ByInstanceId":
                     GetVmById();
                     break;
-                case "ByInstanceName":
-                    GetVmByName();
+                case "FilterByInstanceName":
+                    GetVmByName(FolderId, InstanceName);
+                    break;
+                case "AllInFolderId":
+                    GetVmByFolderId(FolderId);
+                    break;
+                case "AllInFolderObj":
+                    GetVmByFolderObj();
+                    break;
+                case "FilterFolderObjByInstanceName":
+                    FilterFolderObjByInstanceName();
                     break;
                 default:
                     break;
             }
         }
 
-        private void GetVmByName()
+        private void FilterFolderObjByInstanceName()
         {
-            var res = base.grpcClient.List(new ListInstancesRequest { Filter = $"[Instance.name] = {InstanceName}" }, base.headers);
+            GetVmByName(Folder.Id, InstanceName);
+        }
+
+        private void GetVmByFolderObj()
+        {
+            GetVmByFolderId(Folder.Id);
+        }
+
+        private void GetVmByFolderId(string id)
+        {
+            var res = base.grpcClient.List(new ListInstancesRequest { FolderId = id, PageSize = int.Parse(YcConfig.Instance.Configuration["Settings:defaultPageSize"]) }, base.headers);
+            WriteObject(res.Instances, true);
+        }
+
+        private void GetVmByName(string id, string name)
+        {
+            var res = base.grpcClient.List(new ListInstancesRequest { Filter = $"name=\"{name}\"", FolderId = id }, base.headers);
             WriteObject(res.Instances, true);
         }
 
         private void GetVmById()
         {
-            if (string.IsNullOrEmpty(InstanceId))
-            {
-                // list
-                var res = base.grpcClient.List(new ListInstancesRequest { PageSize = int.Parse(YcConfig.Instance.Configuration["Settings:defaultPageSize"]) }, base.headers);
-                WriteObject(res.Instances, true);
-            }
-            else
-            {
-                // get by ID
-                var res = base.grpcClient.Get(new GetInstanceRequest { InstanceId = InstanceId }, base.headers);
-                WriteObject(res);
-            }
+            // get by ID
+            var res = base.grpcClient.Get(new GetInstanceRequest { InstanceId = InstanceId }, base.headers);
+            WriteObject(res);
         }
     }
 }
