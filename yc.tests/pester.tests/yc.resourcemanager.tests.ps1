@@ -1,4 +1,5 @@
 ﻿# to run the tests locally we need to run Invoke-Pester directly in the pester.tests folder
+# the module itself must be present in c:\temp\ycps
 # the following modules must be also installed
 # Install-Module Microsoft.PowerShell.SecretManagement, Microsoft.PowerShell.SecretStore
 # few secrets must be created in the local PowerShell.SecretStore:
