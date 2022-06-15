@@ -8,6 +8,7 @@ using Google.Protobuf.Collections;
 using Yandex.Cloud.Operation;
 using Yandex.Cloud.Vpc.V1;
 using yc.basecmdlet;
+using yc.config;
 using static Yandex.Cloud.Vpc.V1.NetworkService;
 
 namespace yc.vpc
@@ -29,7 +30,6 @@ namespace yc.vpc
         protected override void ProcessRecord()
         {
             CreateVpc(FolderId, Name, Description);
-            //base.ProcessRecord();
         }
 
         private async Task<Operation> WaitForOperationCompletion(Operation o)
@@ -39,7 +39,7 @@ namespace yc.vpc
             while (!o.Done)
             {
                 o = base.grpcOperationClient.Get( operationRequest, base.headers);
-                System.Threading.Thread.Sleep(333);
+                System.Threading.Thread.Sleep(int.Parse(YcConfig.Instance.Configuration["Settings:defaultPollingInterval"]));
             }
 
             return o;
