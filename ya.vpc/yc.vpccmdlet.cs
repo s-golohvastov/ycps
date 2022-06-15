@@ -29,6 +29,7 @@ namespace ya.vpc
 
         [Parameter(Mandatory = true, ParameterSetName = "NetworkId")]
         [ValidateNotNullOrEmpty]
+        [Alias("Id")]
         public string? NetworkId;
 
 
@@ -52,7 +53,6 @@ namespace ya.vpc
                     GetVpcById(NetworkId);
                     break;
             }
-            base.ProcessRecord();
         }
 
 
