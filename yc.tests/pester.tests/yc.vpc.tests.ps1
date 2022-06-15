@@ -59,3 +59,11 @@ Describe 'Basic Get-YcSubnet tests' {
         $vpc | Should -Not -BeNullOrEmpty
     }
 }
+
+
+Describe 'New-YcVpcTest' {
+    It '1. No parameters - list Subsnts in a folder' {
+        $vpc = New-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -Name testVpc -Description "cccc"
+        $vpc | Should -Not -BeNullOrEmpty
+    }
+}
