@@ -3,7 +3,7 @@
 # the following modules must be also installed
 # Install-Module Microsoft.PowerShell.SecretManagement, Microsoft.PowerShell.SecretStore
 # few secrets must be created in the local PowerShell.SecretStore:
-# YandexOAuthToken, YandexTestFolderId, YandexTestNetworkId
+# YandexOAuthToken, YandexTestFolderId, YandexTestNetworkId, YandexTestSubnetId
 
 $ModuleManifestName = 'ipmgmt.psd1'
 $ModuleManifestPath = "$PSScriptRoot\..\$ModuleManifestName"
@@ -33,6 +33,29 @@ Describe 'Basic Get-YcVpc tests' {
     It '4. Pipeline binding folder objects/list all VMs in a set of folders' {
         $cloudId = Get-Secret -Name YandexTestCloudId -AsPlainText
         $vpc = Get-YcCloud -CloudId $cloudId | Get-YcFolder | Get-YcVpc -NetworkName "default"
+        $vpc | Should -Not -BeNullOrEmpty
+    }
+}
+
+Describe 'Basic Get-YcSubnet tests' {
+    It '1. No parameters - list Subsnts in a folder' {
+        $vpc = Get-YcSubnet -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText)
+        $vpc | Should -Not -BeNullOrEmpty
+    }
+
+    It '2. Get a Subnet by Id (folder id not needed)' {
+        $vpc = Get-YcSubnet -SubnetId (Get-Secret -Name YandexTestSubnetId -AsPlainText)
+        $vpc | Should -Not -BeNullOrEmpty
+    }
+
+    It '3. Simple filtering' {
+        $vpc = Get-YcSubnet -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -SubnetName "default-ru-central1-c"
+        $vpc | Should -Not -BeNullOrEmpty
+    }
+
+    It '4. Pipeline binding folder objects/list all VMs in a set of folders' {
+        $cloudId = Get-Secret -Name YandexTestCloudId -AsPlainText
+        $vpc = Get-YcCloud -CloudId $cloudId | Get-YcFolder | Get-YcSubnet -SubnetName "default-ru-central1-b"
         $vpc | Should -Not -BeNullOrEmpty
     }
 }
