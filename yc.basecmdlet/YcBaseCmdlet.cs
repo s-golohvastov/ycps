@@ -54,5 +54,32 @@ namespace yc.basecmdlet
             _grpcOperationClient = (OperationService.OperationServiceClient)Activator.CreateInstance(typeof(OperationService.OperationServiceClient), new object[] { _grpcOperationChannel });
         }
 
+        protected async Task<Operation> WaitForOperationCompletion(Operation operation)
+        {
+            var operationRequest = new GetOperationRequest { OperationId = operation.Id };
+
+            while (!operation.Done)
+            {
+                var xxx = await _grpcOperationClient.GetAsync(operationRequest, _headers);
+                await Task.Delay(int.Parse(YcConfig.Instance.Configuration["Settings:defaultPollingInterval"]));
+            }
+
+            return operation;
+        }
+
+
+        protected Operation WaitForOperation(Operation operation)
+        {
+            var operationRequest = new GetOperationRequest { OperationId = operation.Id };
+
+            while (!operation.Done)
+            {
+                operation = _grpcOperationClient.Get( operationRequest, _headers);
+                Task.Delay(int.Parse(YcConfig.Instance.Configuration["Settings:defaultPollingInterval"])).Wait();
+            }
+
+            return operation;
+        }
+
     }
 }

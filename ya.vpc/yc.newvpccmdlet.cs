@@ -32,19 +32,6 @@ namespace yc.vpc
             CreateVpc(FolderId, Name, Description);
         }
 
-        private async Task<Operation> WaitForOperationCompletion(Operation o)
-        {
-            var operationRequest = new GetOperationRequest { OperationId = o.Id };
-
-            while (!o.Done)
-            {
-                o = base.grpcOperationClient.Get( operationRequest, base.headers);
-                System.Threading.Thread.Sleep(int.Parse(YcConfig.Instance.Configuration["Settings:defaultPollingInterval"]));
-            }
-
-            return o;
-        }
-
         private void CreateVpc(string folderId, string name, string description, MapField<string, string>? labels = default)
         {
             CreateNetworkRequest createRequest;
@@ -68,12 +55,11 @@ namespace yc.vpc
                 };
             }
 
-
-
             Operation res = base.grpcClient.Create(createRequest, base.headers);
-            var x = WaitForOperationCompletion(res).Result;
-            var z = x.Response.Unpack<Network>();
-
+            var operationResult = res.WaitForCompletion().Result;
+            
+            var z = operationResult.Response.Unpack<Network>();
+            
             WriteObject(z);
         }
     }

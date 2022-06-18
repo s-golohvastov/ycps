@@ -24,11 +24,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3017E56-6343-4CAE-8AE0-E1056EB65456}"
 	ProjectSection(SolutionItems) = preProject
 		build.ps1 = build.ps1
+		invokePester.ps1 = invokePester.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yc.connect", "yc.connect\yc.connect.csproj", "{DA116875-07DC-43FD-99AA-287A070174D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yc.vpc", "ya.vpc\yc.vpc.csproj", "{7AE8D28F-83F3-49DA-935A-E1B086F773C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yc.vpc", "ya.vpc\yc.vpc.csproj", "{7AE8D28F-83F3-49DA-935A-E1B086F773C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
