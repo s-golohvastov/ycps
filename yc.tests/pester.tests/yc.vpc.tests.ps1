@@ -62,7 +62,7 @@ Describe 'Basic Get-YcSubnet tests' {
 
 
 Describe 'New-YcVpc Test' {
-    It '1. No parameters - list Subnets in a folder' {
+    It 'Create and remove VPC' {
         $ret = New-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -Name testVpc -Description "cccc"
         $ret | Should -Not -BeNullOrEmpty
 
@@ -72,14 +72,14 @@ Describe 'New-YcVpc Test' {
 
 
 Describe 'Get-YcZone' {
-    It '1. No parameters - list Subnets in a folder' {
+    It 'Get list of zones' {
         $ret = Get-YcZone
         $ret | Should -Not -BeNullOrEmpty
     }
 }
 
 Describe 'New-YcSubnet' {
-    It '1. No parameters - list Subnets in a folder' {
+    It 'Create VPC and subnets in it' {
         $zones = Get-YcZone
         $zones | Should -Not -BeNullOrEmpty
 
