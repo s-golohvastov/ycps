@@ -16,54 +16,80 @@ Connect-YcAccount -OAuthToken (Get-Secret -Name YandexOAuthToken -AsPlainText)
 
 Describe 'Basic Get-YcVpc tests' {
     It '1. No parameters - list VPC in a folder' {
-        $vpc = Get-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText)
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText)
+        $ret | Should -Not -BeNullOrEmpty
     }
 
     It '2. Get a VPC by Id (folder id not needed)' {
-        $vpc = Get-YcVpc -NetworkId (Get-Secret -Name YandexTestNetworkId -AsPlainText)
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcVpc -NetworkId (Get-Secret -Name YandexTestNetworkId -AsPlainText)
+        $ret | Should -Not -BeNullOrEmpty
     }
 
     It '3. Simple filtering' {
-        $vpc = Get-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -NetworkName "default"
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -NetworkName "default"
+        $ret | Should -Not -BeNullOrEmpty
     }
 
     It '4. Pipeline binding folder objects/list all VMs in a set of folders' {
         $cloudId = Get-Secret -Name YandexTestCloudId -AsPlainText
-        $vpc = Get-YcCloud -CloudId $cloudId | Get-YcFolder | Get-YcVpc -NetworkName "default"
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcCloud -CloudId $cloudId | Get-YcFolder | Get-YcVpc -NetworkName "default"
+        $ret | Should -Not -BeNullOrEmpty
     }
 }
 
 Describe 'Basic Get-YcSubnet tests' {
     It '1. No parameters - list Subsnts in a folder' {
-        $vpc = Get-YcSubnet -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText)
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcSubnet -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText)
+        $ret | Should -Not -BeNullOrEmpty
     }
 
     It '2. Get a Subnet by Id (folder id not needed)' {
-        $vpc = Get-YcSubnet -SubnetId (Get-Secret -Name YandexTestSubnetId -AsPlainText)
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcSubnet -SubnetId (Get-Secret -Name YandexTestSubnetId -AsPlainText)
+        $ret | Should -Not -BeNullOrEmpty
     }
 
     It '3. Simple filtering' {
-        $vpc = Get-YcSubnet -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -SubnetName "default-ru-central1-c"
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcSubnet -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -SubnetName "default-ru-central1-c"
+        $ret | Should -Not -BeNullOrEmpty
     }
 
     It '4. Pipeline binding folder objects/list all VMs in a set of folders' {
         $cloudId = Get-Secret -Name YandexTestCloudId -AsPlainText
-        $vpc = Get-YcCloud -CloudId $cloudId | Get-YcFolder | Get-YcSubnet -SubnetName "default-ru-central1-b"
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = Get-YcCloud -CloudId $cloudId | Get-YcFolder | Get-YcSubnet -SubnetName "default-ru-central1-b"
+        $ret | Should -Not -BeNullOrEmpty
     }
 }
 
 
-Describe 'New-YcVpcTest' {
+Describe 'New-YcVpc Test' {
     It '1. No parameters - list Subsnts in a folder' {
-        $vpc = New-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -Name testVpc -Description "cccc"
-        $vpc | Should -Not -BeNullOrEmpty
+        $ret = New-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -Name testVpc -Description "cccc"
+        $ret | Should -Not -BeNullOrEmpty
+
+        Remove-YcVpc -NetworkId $ret.id
+    }
+}
+
+
+Describe 'Get-YcZone' {
+    It '1. No parameters - list Subsnts in a folder' {
+        $ret = Get-YcZone
+        $ret | Should -Not -BeNullOrEmpty
+    }
+}
+
+Describe 'New-YcSubnet' {
+    It '1. No parameters - list Subsnts in a folder' {
+        $zones = Get-YcZone
+        $zones | Should -Not -BeNullOrEmpty
+
+        $network = New-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -Name testVpc -Description "VPC for subnet testing"
+
+        $i = 0
+        $ranges = "192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"
+        $zones | % {
+            New-YcSubnet -FolderId $network.FolderId -NetworkId $network.id -Name "subnet-$i" -ZoneId $_.id -Ipv4Ranges $ranges[$i]
+            $i += 1
+        }
     }
 }
