@@ -46,6 +46,8 @@ Describe 'New-YcVm tests' {
 
         $vmSpec = New-YcVmSpecification -Memory 4GB -Cores 4 -CoreFraction 5
         $bootDisk = New-YcDiskSpecification -Name "boot01" -Size (32GB) -TypeId "network-hdd" -BlockSize 8192 -ImageId (Get-YcVmImage -Family "ubuntu-2004-lts").id
-        New-YcVm -Name "test-vm-from-pester" -FolderId $testFolderId -ZoneId $zoneId -Platform $platformId -SubnetId $subnetId -ResourceSpec $vmSpec -BootDiskSpec $bootDisk
+        $vm = New-YcVm -Name "test-vm-from-pester" -FolderId $testFolderId -ZoneId $zoneId -Platform $platformId -SubnetId $subnetId -ResourceSpec $vmSpec -BootDiskSpec $bootDisk
+
+        Remove-YcVm -VmId $vm.id
     }
 }

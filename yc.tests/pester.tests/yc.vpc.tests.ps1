@@ -92,4 +92,9 @@ Describe 'New-YcSubnet' {
             $i += 1
         }
     }
+
+    It 'Remove VPC along with nested subnets' {
+        $vpc = Get-YcVpc -FolderId (Get-Secret -Name YandexTestFolderId -AsPlainText) -NetworkName "testVpc"
+        Remove-YcVpc -NetworkId $vpc.id -Force
+    }
 }

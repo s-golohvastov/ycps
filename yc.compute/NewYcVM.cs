@@ -80,7 +80,9 @@ namespace yc.compute
             }
 
             var ret = base.grpcClient.Create(request, base.headers).WaitForCompletion().Result;
-            WriteObject(ret);
+            var z = ret.Response.Unpack<Instance>();
+
+            WriteObject(z);
         }
     }
 }

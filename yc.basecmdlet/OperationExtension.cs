@@ -44,7 +44,7 @@ namespace yc.basecmdlet
                 await Task.Delay(int.Parse(YcConfig.Instance.Configuration["Settings:defaultPollingInterval"]));
             }
 
-            return operation;
+            return opResult;
         }
 
 
