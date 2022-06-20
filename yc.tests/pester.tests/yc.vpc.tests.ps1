@@ -5,10 +5,6 @@
 # few secrets must be created in the local PowerShell.SecretStore:
 # YandexOAuthToken, YandexTestFolderId, YandexTestNetworkId, YandexTestSubnetId
 
-$ModuleManifestName = 'ipmgmt.psd1'
-$ModuleManifestPath = "$PSScriptRoot\..\$ModuleManifestName"
-$modulePath = "$PSScriptRoot\.."
-
 # Import-Module $modulePath -Verbose
 Import-Module c:\temp\ycps -Verbose
 Connect-YcAccount -OAuthToken (Get-Secret -Name YandexOAuthToken -AsPlainText)

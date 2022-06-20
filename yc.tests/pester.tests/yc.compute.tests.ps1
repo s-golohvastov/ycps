@@ -5,9 +5,6 @@
 # few secrets must be created in the local PowerShell.SecretStore:
 # YandexOAuthToken, YandexTestFolderId, YandexTestVmId
 
-$ModuleManifestName = 'ipmgmt.psd1'
-$ModuleManifestPath = "$PSScriptRoot\..\$ModuleManifestName"
-$modulePath = "$PSScriptRoot\.."
 
 # Import-Module $modulePath -Verbose
 Import-Module c:\temp\ycps -Verbose
@@ -47,6 +44,22 @@ Describe 'New-YcVm tests' {
         $vmSpec = New-YcVmSpecification -Memory 4GB -Cores 4 -CoreFraction 5
         $bootDisk = New-YcDiskSpecification -Name "boot01" -Size (32GB) -TypeId "network-hdd" -BlockSize 8192 -ImageId (Get-YcVmImage -Family "ubuntu-2004-lts").id
         $vm = New-YcVm -Name "test-vm-from-pester" -FolderId $testFolderId -ZoneId $zoneId -Platform $platformId -SubnetId $subnetId -ResourceSpec $vmSpec -BootDiskSpec $bootDisk
+
+        Remove-YcVm -VmId $vm.id
+    }
+
+        It 'Create a simple Linux VM, try to stop & start' {
+        $testFolderId = (Get-Secret -Name YandexTestFolderId -AsPlainText)
+        $platformId = "standard-v1"
+        $zoneId = "ru-central1-a"
+        $subnetId = "e9b7860bfmo8149bqos4"
+
+        $vmSpec = New-YcVmSpecification -Memory 4GB -Cores 4 -CoreFraction 5
+        $bootDisk = New-YcDiskSpecification -Name "boot01" -Size (32GB) -TypeId "network-hdd" -BlockSize 8192 -ImageId (Get-YcVmImage -Family "ubuntu-2004-lts").id
+        $vm = New-YcVm -Name "test-vm-from-pester" -FolderId $testFolderId -ZoneId $zoneId -Platform $platformId -SubnetId $subnetId -ResourceSpec $vmSpec -BootDiskSpec $bootDisk
+
+        Stop-YcVm -InstanceId $vm.id
+        Start-YcVm -InstanceId $vm.id
 
         Remove-YcVm -VmId $vm.id
     }
