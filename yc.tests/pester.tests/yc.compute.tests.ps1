@@ -39,7 +39,7 @@ Describe 'New-YcVm tests' {
         $testFolderId = (Get-Secret -Name YandexTestFolderId -AsPlainText)
         $platformId = "standard-v1"
         $zoneId = "ru-central1-a"
-        $subnetId = "e9b7860bfmo8149bqos4"
+        $subnetId = (Get-Secret -Name YandexTestSubnetId -AsPlainText)
 
         $vmSpec = New-YcVmSpecification -Memory 4GB -Cores 4 -CoreFraction 5
         $bootDisk = New-YcDiskSpecification -Name "boot01" -Size (32GB) -TypeId "network-hdd" -BlockSize 8192 -ImageId (Get-YcVmImage -Family "ubuntu-2004-lts").id
@@ -52,7 +52,7 @@ Describe 'New-YcVm tests' {
         $testFolderId = (Get-Secret -Name YandexTestFolderId -AsPlainText)
         $platformId = "standard-v1"
         $zoneId = "ru-central1-a"
-        $subnetId = "e9b7860bfmo8149bqos4"
+        $subnetId = (Get-Secret -Name YandexTestSubnetId -AsPlainText)
 
         $vmSpec = New-YcVmSpecification -Memory 4GB -Cores 4 -CoreFraction 5
         $bootDisk = New-YcDiskSpecification -Name "boot01" -Size (32GB) -TypeId "network-hdd" -BlockSize 8192 -ImageId (Get-YcVmImage -Family "ubuntu-2004-lts").id
