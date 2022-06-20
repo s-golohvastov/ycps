@@ -14,7 +14,7 @@ namespace yc.basecmdlet
 
     }
 
-    public class YcBase<TClient> : PSCmdlet
+    public class YcBase<TClient> : YcBaseCmdlet
     {
         private string _endpoint;
         private GrpcChannel _grpcChannel;

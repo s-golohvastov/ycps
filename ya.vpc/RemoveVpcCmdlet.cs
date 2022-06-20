@@ -12,6 +12,7 @@ using static Yandex.Cloud.Vpc.V1.NetworkService;
 namespace yc.vpc
 {
     
+    // TODO: add -Force flag ot recursively delete subnets (and potentially other nested resources)
     [Cmdlet(VerbsCommon.Remove, "YcVpc")]
     public class RemoveVpcCmdlet: YcBase<NetworkServiceClient>
     {

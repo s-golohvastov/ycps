@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Net.Client;
+using Yandex.Cloud.Compute.V1;
 using Yandex.Cloud.Operation;
 using yc.auth;
 using yc.config;
@@ -44,6 +45,25 @@ namespace yc.basecmdlet
             }
 
             return operation;
+        }
+
+
+        // TODO: change this to something else. this is to iterate through pages of a list request.
+        // potentially we want to have a common for all possible list requests without an extension method
+        // not sure however if it is a good idea to inherit generated protobuf code ...
+        public static ListImagesResponse GetToEnd(this ListImagesResponse response, ListImagesRequest request, ImageService.ImageServiceClient client, Metadata headers)
+        {
+            ListImagesResponse ret = new ListImagesResponse();
+            ret.MergeFrom(response);
+            while (!string.IsNullOrEmpty(ret.NextPageToken))
+            {
+                request.PageToken = response.NextPageToken;
+                var r1 = client.List(request, headers);
+                ret.MergeFrom(r1);
+                ret.NextPageToken = r1.NextPageToken;
+            }
+
+            return ret;
         }
     }
 }
