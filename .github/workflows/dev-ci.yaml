@@ -28,7 +28,7 @@ jobs:
       
       - name: build
         run: |
-          $targetFolder = $env:GITHUB_WORKSPACE\ycps
+          $targetFolder = "$($env:GITHUB_WORKSPACE)\ycps"
           mkdir $targetFolder
           dotnet build && dotnet publish --self-contained --use-current-runtime -c Debug -o $targetFolder
         shell: pwsh
