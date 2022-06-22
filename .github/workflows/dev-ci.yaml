@@ -32,3 +32,9 @@ jobs:
           mkdir $targetFolder
           dotnet build && dotnet publish --self-contained --use-current-runtime -c Debug -o $targetFolder
         shell: pwsh
+      
+      - name: push package
+        run: |
+          $targetFolder = "$($env:RUNNER_TEMP)\ycps"
+          Publish-Module -Path $targetFolder -NuGetApiKey ${{ secrets.PS_GALLERY_SECRET }}
+        shell: pwsh
